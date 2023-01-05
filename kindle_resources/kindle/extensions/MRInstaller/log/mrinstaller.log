@@ -1,0 +1,210 @@
+
+
+**** **** **** ****
+
+[2023-01-04 @ 22:24:10 +0000] :: [MRPI r18982] - Beginning the processing of package 'Update_linkss_0.25.N_install_pw2_and_up.bin' (linBELLATRIXs 0.25.N I W+Z+R+B) . . .
+
+Extracting update package 'Update_linkss_0.25.N_install_pw2_and_up.bin' to '/var/tmp/mrpi/staging'.
+Bundle         SP01 (Signing Envelope)
+Cert number    0
+Cert file      pubdevkey01.pem (Developer)
+Bundle         FD04 (Versionless [vls])
+Bundle Type    OTA V2
+Minimum OTA    0
+Target OTA     18446744073709551615
+Devices        69
+Device         Kindle PaperWhite 2 (2013) WiFi (0xD4)
+Device         Kindle PaperWhite 2 (2013) WiFi Japan (0x5A)
+Device         Kindle PaperWhite 2 (2013) WiFi+3G (0xD5)
+Device         Kindle PaperWhite 2 (2013) WiFi+3G Canada (0xD6)
+Device         Kindle PaperWhite 2 (2013) WiFi+3G Europe (0xD7)
+Device         Kindle PaperWhite 2 (2013) WiFi+3G Russia (0xD8)
+Device         Kindle PaperWhite 2 (2013) WiFi+3G Japan (0xF2)
+Device         Kindle PaperWhite 2 (2013) WiFi (4GB) International (0x17)
+Device         Kindle PaperWhite 2 (2013) WiFi+3G (4GB) Europe (0x60)
+Device         Kindle PaperWhite 2 (2013) WiFi+3G (4GB) (0x62)
+Device         Kindle PaperWhite 2 (2013) WiFi+3G (4GB) Canada (0x5F)
+Device         Kindle PaperWhite 2 (2013) WiFi+3G (4GB) Brazil (0x61)
+Device         Kindle Basic (2014) (0xC6)
+Device         Kindle Basic (2014) Australia (0xDD)
+Device         Kindle Voyage WiFi (0x13)
+Device         Kindle Voyage WiFi+3G (0x54)
+Device         Kindle Voyage WiFi+3G Europe (0x53)
+Device         Kindle Voyage WiFi+3G Japan (0x2A)
+Device         Kindle Voyage WiFi+3G Mexico (0x52)
+Device         Kindle PaperWhite 3 (2015) WiFi (0G1 -> 0x201)
+Device         Kindle PaperWhite 3 (2015) WiFi+3G Japan (0G7 -> 0x207)
+Device         Kindle PaperWhite 3 (2015) WiFi+3G Canada (0G6 -> 0x206)
+Device         Kindle PaperWhite 3 (2015) WiFi+3G (0G2 -> 0x202)
+Device         Kindle PaperWhite 3 (2015) WiFi+3G Europe (0G5 -> 0x205)
+Device         Kindle PaperWhite 3 (2015) WiFi+3G Mexico (0G4 -> 0x204)
+Device         White Kindle PaperWhite 3 (2016) WiFi (0KB -> 0x26B)
+Device         White Kindle PaperWhite 3 (2016) WiFi+3G Japan (0KC -> 0x26C)
+Device         Kindle PaperWhite 3 (2016) WiFi (32GB) Japan (0LK -> 0x293)
+Device         White Kindle PaperWhite 3 (2016) WiFi (32GB) Japan (0LL -> 0x294)
+Device         White Kindle PaperWhite 3 (2016) WiFi+3G International (0KE -> 0x26E)
+Device         White Kindle PaperWhite 3 (2016) WiFi+3G International (Bis) (0KF -> 0x26F)
+Device         Kindle Oasis WiFi (0GC -> 0x20C)
+Device         Kindle Oasis WiFi+3G (0GD -> 0x20D)
+Device         Kindle Oasis WiFi+3G Europe (0GU -> 0x21C)
+Device         Kindle Oasis WiFi+3G International (0GR -> 0x219)
+Device         Kindle Oasis WiFi+3G China (0GT -> 0x21B)
+Device         Kindle Basic 2 (2016) (0K9 -> 0x269)
+Device         White Kindle Basic 2 (2016) (0KA -> 0x26A)
+Device         Kindle Oasis 2 (2017) WiFi (8GB) (0P8 -> 0x2E8)
+Device         Kindle Oasis 2 (2017) WiFi+3G (32GB) (0S1 -> 0x341)
+Device         Kindle Oasis 2 (2017) WiFi (32GB) (0SA -> 0x34A)
+Device         Kindle Oasis 2 (2017) WiFi+3G (32GB) Europe (0S2 -> 0x342)
+Device         Champagne Kindle Oasis 2 (2017) WiFi (32GB) (0P1 -> 0x2E1)
+Device         Kindle Oasis 2 (2017) WiFi+3G (32GB) (Variant 0P6) (0P6 -> 0x2E6)
+Device         Kindle PaperWhite 4 (2018) WiFi (8GB) (0PP -> 0x2F7)
+Device         Kindle PaperWhite 4 (2018) WiFi (32GB) (0T6 -> 0x366)
+Device         Kindle PaperWhite 4 (2018) WiFi+4G (32GB) (0T1 -> 0x361)
+Device         Kindle PaperWhite 4 (2018) WiFi+4G (32GB) Europe (0T2 -> 0x362)
+Device         Kindle PaperWhite 4 (2018) WiFi (8GB) India (102 -> 0x402)
+Device         Kindle PaperWhite 4 (2018) WiFi+4G (32GB) Japan (0T3 -> 0x363)
+Device         Twilight Blue Kindle PaperWhite 4 (2018) WiFi (8GB) (16T -> 0x4DB)
+Device         Twilight Blue Kindle PaperWhite 4 (2018) WiFi (32GB) (16Q -> 0x4D8)
+Device         Plum Kindle PaperWhite 4 (2018) WiFi (8GB) (16U -> 0x4DC)
+Device         Sage Kindle PaperWhite 4 (2018) WiFi (8GB) (16V -> 0x4DD)
+Device         Kindle PaperWhite 4 (2018) WiFi (32GB) India (103 -> 0x403)
+Device         Plum Kindle PaperWhite 4 (2018) WiFi (32GB) (16R -> 0x4D9)
+Device         Sage Kindle PaperWhite 4 (2018) WiFi (32GB) (16S -> 0x4DA)
+Device         Kindle Basic 3 (2019) (10L -> 0x414)
+Device         White Kindle Basic 3 (2019) (0WH -> 0x3D1)
+Device         Kindle Basic 3 (2019) Kids Edition (0VB -> 0x3AB)
+Device         White Kindle Basic 3 (2019) (8GB) (0WF -> 0x3CF)
+Device         Champagne Kindle Oasis 3 (2019) WiFi (32GB) (11L -> 0x434)
+Device         Kindle Oasis 3 (2019) WiFi+4G (32GB) Japan (0WQ -> 0x3D8)
+Device         Kindle Oasis 3 (2019) WiFi+4G (32GB) (0WN -> 0x3D6)
+Device         Kindle Oasis 3 (2019) WiFi (32GB) (0WM -> 0x3D5)
+Device         Kindle Oasis 3 (2019) WiFi (8GB) (0WL -> 0x3D4)
+Device         Kindle Oasis 3 (2019) WiFi+4G (32GB) India (0WP -> 0x3D7)
+Device         Kindle PaperWhite 5 Signature Edition (2021) (1LG -> 0x690)
+Device         Kindle PaperWhite 5 (2021) (Unknown Variant 1PX) (1PX -> 0x6FF)
+Critical       0
+Padding Byte   0 (0x00)
+MD5 Hash       660e356030d054c108a6135389950c79
+Metadata       7
+Metastring     PackageName=ScreenSavers
+Metastring     PackageVersion=0.25.N-r18981
+Metastring     PackageAuthor=NiLuJe
+Metastring     PackageMaintainer=NiLuJe
+Metastring     PackagedWith=KindleTool v1.6.5.261-gcf8ed62 built by portage@localhost on Gentoo
+Metastring     PackagedBy=niluje@tyrande
+Metastring     PackagedOn=2022-10-02 @ 01:33:27 UTC
+x libotautils5
+x install.sh
+x linkss.tar.xz
+x xzdec
+x linkss.conf
+x libotautils5.sig
+x install.sh.sig
+x linkss.tar.xz.sig
+x xzdec.sig
+x linkss.conf.sig
+x update-filelist.dat.sig
+x update-filelist.dat
+--
+Running 'install.sh' for 'linBELLATRIXs 0.25.N I W+Z+R+B' (Update_linkss_0.25.N_install_pw2_and_up.bin) @ Wed, 04 Jan 2023 22:24:11 +0000
+
+system: I linkss:install::using the default paperwhite custom screensaver
+system: I linkss:install::installing custom directory
+src/linkss/
+src/linkss/screensavers/
+src/linkss/screensavers/00_you_can_delete_me-pw5.png
+src/linkss/screensavers/00_you_can_delete_me-koa2.png
+src/linkss/screensavers/00_you_can_delete_me-kv.png
+src/linkss/screensavers/00_you_can_delete_me-pw.png
+src/linkss/screensavers/00_you_can_delete_me.png
+src/linkss/auto
+src/linkss/info.txt
+src/linkss/bin/
+src/linkss/bin/mobi_uncompress.py
+src/linkss/bin/linkss
+src/linkss/bin/path.py
+src/linkss/bin/kfxmeta.py
+src/linkss/bin/usb-watchdog
+src/linkss/bin/unlinkss
+src/linkss/bin/libkh5
+src/linkss/bin/shuffless
+src/linkss/bin/usb-watchdog-helper
+src/linkss/bin/cover-watchdog
+src/linkss/bin/utf8_utils.py
+src/linkss/bin/cover-extract
+src/linkss/bin/kindleunpack.py
+src/linkss/bin/cover-watchdog-helper
+src/linkss/staging/
+src/linkss/discarded/
+src/linkss/backups/
+src/linkss/backups/custom/
+src/linkss/etc/
+src/linkss/etc/ImageMagick-6/
+src/linkss/etc/ImageMagick-6/type-ghostscript.xml
+src/linkss/etc/ImageMagick-6/type-dejavu.xml
+src/linkss/etc/ImageMagick-6/colors.xml
+src/linkss/etc/ImageMagick-6/log.xml
+src/linkss/etc/ImageMagick-6/type-urw-base35.xml
+src/linkss/etc/ImageMagick-6/policy.xml
+src/linkss/etc/ImageMagick-6/magic.xml
+src/linkss/etc/ImageMagick-6/type-windows.xml
+src/linkss/etc/ImageMagick-6/type.xml
+src/linkss/etc/ImageMagick-6/thresholds.xml
+src/linkss/etc/ImageMagick-6/coder.xml
+src/linkss/etc/ImageMagick-6/quantization-table.xml
+src/linkss/etc/ImageMagick-6/delegates.xml
+src/linkss/etc/ImageMagick-6/type-apple.xml
+src/linkss/etc/ImageMagick-6/mime.xml
+src/linkss/etc/kindle_colors.gif
+src/linkss/etc/VERSION
+src/linkss/cover_cache/
+src/linkss/cover_cache/default-pw5.png
+src/linkss/cover_cache/overlay.png
+src/linkss/cover_cache/default.png
+src/linkss/cover_cache/overlay-pw5.png
+src/linkss/cover_cache/default-koa2.png
+src/linkss/cover_cache/overlay-pw.png
+src/linkss/cover_cache/overlay-kv.png
+src/linkss/cover_cache/default-pw.png
+src/linkss/cover_cache/default-kv.png
+src/linkss/cover_cache/overlay-koa2.png
+src/linkss/backup
+src/linkss/lib/
+src/linkss/overflow/
+src/linkss/run/
+src/extensions/
+src/extensions/linkss/
+src/extensions/linkss/bin/
+src/extensions/linkss/bin/linkss.sh
+src/extensions/linkss/menu.json
+src/extensions/linkss/config.xml
+src/linkss/bin/convert
+src/linkss/bin/mogrify
+src/linkss/bin/identify
+src/linkss/bin/inotifywait
+src/linkss/bin/shlock
+src/linkss/bin/sort
+src/linkss/lib/libz.so.1
+src/linkss/lib/libpng16.so.16
+src/linkss/lib/libharfbuzz.so.0
+src/linkss/lib/libfreetype.so.6
+src/linkss/lib/libturbojpeg.so.0
+src/linkss/lib/libjpeg.so.62
+src/linkss/lib/libMagickWand-6.Q8.so.7
+src/linkss/lib/libMagickCore-6.Q8.so.7
+src/linkss/bin/mobicover
+src/linkss/bin/fbink
+system: I linkss:install::preserving custom content (linkss/screensavers/00_you_can_delete_me.png)
+system: I linkss:install::preserving custom content (linkss/screensavers/00_you_can_delete_me-kv.png)
+system: I linkss:install::preserving custom content (linkss/screensavers/00_you_can_delete_me-koa2.png)
+system: I linkss:install::preserving custom content (linkss/screensavers/00_you_can_delete_me-pw5.png)
+system: I linkss:install::removing deprecated files (simple_screensaver)
+system: I linkss:install::removing deprecated files (mobi_unpack)
+system: I linkss:install::removing deprecated files (old imagemagick config)
+system: I linkss:install::installing upstart job
+system: I linkss:install::generating python bytecode
+system: I linkss:install::cleaning up
+system: I linkss:install::done
+
+Success! :)
+
