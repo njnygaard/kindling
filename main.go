@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/png"
@@ -15,7 +16,21 @@ func main() {
 	upLeft := image.Point{0, 0}
 	lowRight := image.Point{width, height}
 
-	img := image.NewGray16(image.Rectangle{upLeft, lowRight})
+	img := image.NewGray(image.Rectangle{upLeft, lowRight})
+
+	blank, err := os.Open("blank.png")
+	if err != nil {
+		panic(err)
+	}
+	defer blank.Close()
+
+	imported, err := png.Decode(blank)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(imported.ColorModel())
+	fmt.Println(img.ColorModel())
 
 	// Colors are defined by Red, Green, Blue, Alpha uint8 values.
 	// g := color.Gray16{100}
