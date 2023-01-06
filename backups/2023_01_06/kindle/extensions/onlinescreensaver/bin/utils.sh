@@ -25,7 +25,6 @@ currentTime () {
 	date +%s
 }
 
-
 # runs when in the readyToSuspend state;
 # sets the rtc to wake up
 # arguments: $1 - amount of seconds to wake up in

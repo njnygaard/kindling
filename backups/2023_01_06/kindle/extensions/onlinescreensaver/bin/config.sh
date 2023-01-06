@@ -49,12 +49,12 @@ LOGGING=1
 
 # Where to log to - either /dev/stderr for console output, or an absolute
 # file path (beware that this may grow large over time!)
-LOGFILE=/dev/stderr
-#LOGFILE=/tmp/onlinescreensaver.log
+#LOGFILE=/dev/stderr
+LOGFILE=/mnt/us/logs/onlinescreensaver.log
 
 # whether to disable WiFi after the script has finished (if WiFi was off
 # when the script started, it will always turn it off)
-DISABLE_WIFI=0
+DISABLE_WIFI=1
 
 # Domain to ping to test network connectivity. Default should work, but in
 # case some firewall blocks access, try a popular local website.
@@ -64,8 +64,6 @@ TEST_DOMAIN="192.168.1.146"
 # (if you experience frequent timeouts when waking up from sleep, try to
 # increase this value)
 NETWORK_TIMEOUT=30
-
-
 
 #############################################################################
 # Advanced
