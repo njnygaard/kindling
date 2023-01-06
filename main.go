@@ -70,30 +70,56 @@ func main() {
 	if err := dc.LoadFontFace("impact.ttf", 48); err != nil {
 		panic(err)
 	}
+
 	dc.SetRGB(0, 0, 0)
+
 	s := w.Weather[0].Main
-	// n := 6 // "stroke" size
-	// for dy := -n; dy <= n; dy++ {
-	// 	for dx := -n; dx <= n; dx++ {
-	// 		if dx*dx+dy*dy >= n*n {
-	// 			// give it rounded corners
-	// 			continue
-	// 		}
-	// 		x := float64(width)/2 + float64(dx)
-	// 		y := float64(height)/2 + float64(dy)
-	// 		dc.DrawStringAnchored(s, x, y, 0.5, 0.5)
-	// 	}
-	// }
-	// dc.SetRGB(1, 1, 1)
 	dc.DrawStringAnchored(s, float64(width)/2, float64(height)/4, 0.5, 0.5)
 
-	s = fmt.Sprintf("%.0f°F", w.Main.Temp)
+	// s = fmt.Sprintf("%.0f°F", w.Main.Temp)
+	// dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 0.5)
+
+	s = formatTemp(w.Main.TempMin, w.Main.Temp, w.Main.TempMax)
+	// s = fmt.Sprintf("%.0f°F |---- %.0f°F ----| %.0f°F", w.Main.TempMin, w.Main.Temp, w.Main.TempMax)
 	dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 0.5)
+
 	dc.SavePNG("out.png")
 
 	// Encode as PNG.
 	f, _ := os.Create("image.png")
 	png.Encode(f, img)
+}
+
+func formatTemp(min float64, temp float64, max float64) (f string) {
+	minInt := int(min)
+	maxInt := int(max)
+	// tempInt := int(temp)
+
+	tempInt := 51
+
+	for i := minInt; i < maxInt; i++ {
+		switch {
+		case i == minInt:
+			f = f + fmt.Sprintf("%.0f°F", min)
+		case i == maxInt-1:
+			f = f + fmt.Sprintf("%.0f°F", max)
+		case i == tempInt:
+			if tempInt == minInt || tempInt == maxInt {
+				// continue
+				f = f + "_"
+			} else {
+				log.Printf("tempInt: %d", tempInt)
+				log.Printf("minInt: %d", minInt)
+				log.Printf("maxInt: %d", maxInt)
+				log.Printf("equal condition")
+				f = f + fmt.Sprintf("%.0f°F", temp)
+			}
+		default:
+			f = f + "_"
+		}
+	}
+
+	return f
 }
 
 func isCircle(Xo int, Yo int, r int, x int, y int) (inside bool) {

@@ -29,7 +29,7 @@ DEFAULTINTERVAL=300
 #
 # Use the checkschedule.sh script to verify that the setting is correct and
 # which would be the active interval.
-SCHEDULE="00:00-06:00=10 06:00-22:00=10 22:00-24:00=10"
+SCHEDULE="00:00-06:00=5 06:00-22:00=5 22:00-24:00=5"
 
 # URL of screensaver image. This really must be in the EXACT resolution of
 # your Kindle's screen (e.g. 600x800 or 758x1024) and really must be PNG.
@@ -58,7 +58,7 @@ DISABLE_WIFI=0
 
 # Domain to ping to test network connectivity. Default should work, but in
 # case some firewall blocks access, try a popular local website.
-TEST_DOMAIN="www.google.com"
+TEST_DOMAIN="192.168.1.146"
 
 # How long (in seconds) to wait for an internet connection to be established
 # (if you experience frequent timeouts when waking up from sleep, try to
