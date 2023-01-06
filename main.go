@@ -19,8 +19,8 @@ func main() {
 	// The kindle will subtly break
 	img := image.NewGray(image.Rectangle{upLeft, lowRight})
 
-	// drawTestPattern(img, width, height)
-	drawGrid(img, width, height)
+	drawTestPattern(img, width, height)
+	//drawGrid(img, width, height)
 
 	// Encode as PNG.
 	f, _ := os.Create("image.png")
