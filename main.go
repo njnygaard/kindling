@@ -1,12 +1,44 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/png"
+	"log"
 	"math"
 	"os"
+
+	owm "github.com/briandowns/openweathermap"
+	"github.com/fogleman/gg"
 )
+
+const (
+	API_KEY = "b40995f7e1911e427c0700778e542369"
+)
+
+// func printWeather() {
+// 	w, err := owm.NewCurrent("F", "en", API_KEY)
+// 	if err != nil {
+// 		log.Fatalln(err)
+// 	}
+
+// 	w.CurrentByName("Chandler")
+
+// 	fmt.Printf("Sunrise: %d\n", w.Sys.Sunrise)
+// 	fmt.Printf("Sunrise: %d\n", w.Sys.Sunset)
+// 	fmt.Printf("Weather: %s\n", w.Weather[0].Main)
+// 	fmt.Printf("Weather Description: %s\n", w.Weather[0].Description)
+// 	fmt.Printf("Weather Icon: %s\n", w.Weather[0].Icon)
+// 	fmt.Printf("Temp: %f\n", w.Main.Temp)
+// 	fmt.Printf("Min: %f\n", w.Main.TempMin)
+// 	fmt.Printf("Max: %f\n", w.Main.TempMax)
+// 	fmt.Printf("Feels Like: %f\n", w.Main.FeelsLike)
+// 	fmt.Printf("Humidity: %d\n", w.Main.Humidity)
+// 	fmt.Printf("Wind Speed: %f\n", w.Wind.Speed)
+// 	fmt.Printf("Humidity: %f\n", w.Wind.Deg)
+
+// }
 
 func main() {
 	width := 758
@@ -15,16 +47,79 @@ func main() {
 	upLeft := image.Point{0, 0}
 	lowRight := image.Point{width, height}
 
+	// printWeather()
+
 	// DO NOT USE image.Gray16
 	// The kindle will subtly break
 	img := image.NewGray(image.Rectangle{upLeft, lowRight})
 
-	// drawTestPattern(img, width, height)
-	drawGrid(img, width, height)
+	drawTestPattern(img, width, height)
+	//drawGrid(img, width, height)
+
+	w, err := owm.NewCurrent("F", "en", API_KEY)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	w.CurrentByName("Chandler")
+
+	// const S = 1024
+	dc := gg.NewContext(width, height)
+	dc.SetRGB(1, 1, 1)
+	dc.Clear()
+	if err := dc.LoadFontFace("impact.ttf", 48); err != nil {
+		panic(err)
+	}
+
+	dc.SetRGB(0, 0, 0)
+
+	s := w.Weather[0].Main
+	dc.DrawStringAnchored(s, float64(width)/2, float64(height)/4, 0.5, 0.5)
+
+	// s = fmt.Sprintf("%.0f°F", w.Main.Temp)
+	// dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 0.5)
+
+	s = formatTemp(w.Main.TempMin, w.Main.Temp, w.Main.TempMax)
+	// s = fmt.Sprintf("%.0f°F |---- %.0f°F ----| %.0f°F", w.Main.TempMin, w.Main.Temp, w.Main.TempMax)
+	dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 0.5)
+
+	dc.SavePNG("out.png")
 
 	// Encode as PNG.
 	f, _ := os.Create("image.png")
 	png.Encode(f, img)
+}
+
+func formatTemp(min float64, temp float64, max float64) (f string) {
+	minInt := int(min)
+	maxInt := int(max)
+	// tempInt := int(temp)
+
+	tempInt := 51
+
+	for i := minInt; i < maxInt; i++ {
+		switch {
+		case i == minInt:
+			f = f + fmt.Sprintf("%.0f°F", min)
+		case i == maxInt-1:
+			f = f + fmt.Sprintf("%.0f°F", max)
+		case i == tempInt:
+			if tempInt == minInt || tempInt == maxInt {
+				// continue
+				f = f + "_"
+			} else {
+				log.Printf("tempInt: %d", tempInt)
+				log.Printf("minInt: %d", minInt)
+				log.Printf("maxInt: %d", maxInt)
+				log.Printf("equal condition")
+				f = f + fmt.Sprintf("%.0f°F", temp)
+			}
+		default:
+			f = f + "_"
+		}
+	}
+
+	return f
 }
 
 func isCircle(Xo int, Yo int, r int, x int, y int) (inside bool) {
