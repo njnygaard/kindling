@@ -67,7 +67,7 @@ func main() {
 	dc.Clear()
 
 	// Fancy for Description
-	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", 80); err != nil {
+	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", 100); err != nil {
 		panic(err)
 	}
 	dc.SetRGB(0)
@@ -82,21 +82,21 @@ func main() {
 	// Time
 	current_time := time.Now()
 
-	dc.DrawStringAnchored(current_time.Format("Monday, January 2, 2006"), 0, float64(0), 0, 1)
-	dc.DrawStringAnchored(current_time.Format("15:04:05"), float64(width), float64(0), 1.05, 1)
+	dc.DrawStringAnchored(current_time.Format("Monday, January 2, 2006"), 0, float64(0), 0, 2)
+	dc.DrawStringAnchored(current_time.Format("15:04:05"), float64(width), float64(0), 1.05, 2)
 
 	// Temperature
 	ranged := w.Main.TempMax - w.Main.TempMin
 	scaledTemperature := w.Main.Temp - w.Main.TempMin
 	ratio := scaledTemperature / ranged
 
-	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(height), 1.1, -0.5)
+	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(height), 1.1, -1.5)
 
 	if w.Main.TempMin+1 < w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(height), -0.1, -0.5)
+		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(height), -0.1, -1.5)
 	}
 	if w.Main.TempMax-1 > w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(height), 1.1, -0.5)
+		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(height), 1.1, -1.5)
 	}
 
 	// Export for Text
