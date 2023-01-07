@@ -3,6 +3,9 @@ Description=Compiles the Weather image for the Kindling display
 Wants=kindling-weather.timer
 
 [Service]
+Environment=HOME=/home/drone
+Environment=GOROOT=/usr/lib/go
+Environment=GOPATH=/home/drone/development/go:/home/drone/development/go/bin:/usr/lib/go/bin
 Type=oneshot
 ExecStart=/home/drone/workspace/kindling/systemd/scripts/fire.sh
 
