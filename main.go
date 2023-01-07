@@ -4,15 +4,13 @@ import (
 	"fmt"
 	"image"
 	"image/color"
-	"image/png"
 	"log"
 	"math"
-	"os"
 	"strings"
 	"time"
 
 	owm "github.com/briandowns/openweathermap"
-	"github.com/fogleman/gg"
+	"github.com/njnygaard/kindling/gg"
 )
 
 const (
@@ -43,74 +41,70 @@ const (
 // }
 
 func main() {
+	// Basics
 	width := 758
 	height := 1024
+	// upLeft := image.Point{0, 0}
+	// lowRight := image.Point{width, height}
+	// img := image.NewGray(image.Rectangle{upLeft, lowRight})
 
-	upLeft := image.Point{0, 0}
-	lowRight := image.Point{width, height}
-
-	// printWeather()
-
+	// Draw Shapes
 	// DO NOT USE image.Gray16
 	// The kindle will subtly break
-	img := image.NewGray(image.Rectangle{upLeft, lowRight})
+	// drawTestPattern(img, width, height)
+	// drawGrid(img, width, height)
 
-	drawTestPattern(img, width, height)
-	//drawGrid(img, width, height)
-
+	// Get Weather
 	w, err := owm.NewCurrent("F", "en", API_KEY)
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 	w.CurrentByName("Chandler")
 
-	// const S = 1024
+	// Draw Text
 	dc := gg.NewContext(width, height)
-	dc.SetRGB(1, 1, 1)
+	dc.SetRGB(1)
 	dc.Clear()
-	if err := dc.LoadFontFace("impact.ttf", 48); err != nil {
+
+	// Fancy for Description
+	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", 80); err != nil {
+		panic(err)
+	}
+	dc.SetRGB(0)
+	s := strings.Title(w.Weather[0].Description)
+	dc.DrawStringAnchored(s, float64(width)/2, float64(2*height)/4, 0.5, 0.5)
+
+	// Clean Font for Others
+	if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
 		panic(err)
 	}
 
-	dc.SetRGB(0, 0, 0)
+	// Time
+	current_time := time.Now()
 
-	// s := w.Weather[0].Main
-	// dc.DrawStringAnchored(s, float64(width)/2, float64(height)/4, 0.5, 0.5)
+	dc.DrawStringAnchored(current_time.Format("Monday, January 2, 2006"), 0, float64(0), 0, 1)
+	dc.DrawStringAnchored(current_time.Format("15:04:05"), float64(width), float64(0), 1.05, 1)
 
-	s := strings.ToTitle(w.Weather[0].Description)
-	dc.DrawStringAnchored(s, float64(width)/2, float64(2*height)/4, 0.5, 0.5)
-
-	// s = fmt.Sprintf("%.0f°F", w.Main.Temp)
-	// dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 0.5)
-
-	// s = formatTemp(w.Main.TempMin, w.Main.Temp, w.Main.TempMax)
-	// // s = fmt.Sprintf("%.0f°F |---- %.0f°F ----| %.0f°F", w.Main.TempMin, w.Main.Temp, w.Main.TempMax)
-	// dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 0.5)
-
+	// Temperature
 	ranged := w.Main.TempMax - w.Main.TempMin
 	scaledTemperature := w.Main.Temp - w.Main.TempMin
 	ratio := scaledTemperature / ranged
 
-	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(3*height)/4, 1.1, 0.5)
+	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(height), 1.1, -0.5)
 
 	if w.Main.TempMin+1 < w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(3*height)/4, -0.1, 0.5)
+		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(height), -0.1, -0.5)
 	}
 	if w.Main.TempMax-1 > w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(3*height)/4, 1.1, 0.5)
+		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(height), 1.1, -0.5)
 	}
 
-	current_time := time.Now()
-
-	dc.DrawStringAnchored(current_time.Format("2006-01-02"), float64(width)/2, float64(1*height)/4, 0.5, -0.25)
-	dc.DrawStringAnchored(current_time.Format("15:04:05"), float64(width)/2, float64(1*height)/4, 0.5, 1.25)
-
+	// Export for Text
 	dc.SavePNG("out.png")
 
-	// Encode as PNG.
-	f, _ := os.Create("image.png")
-	png.Encode(f, img)
+	// Encode as PNG for Shapes
+	// f, _ := os.Create("image.png")
+	// png.Encode(f, img)
 }
 
 // func formatTemp(min float64, temp float64, max float64) (f string) {
@@ -192,6 +186,19 @@ func drawGrid(img *image.Gray, width int, height int) {
 
 func drawTestPattern(img *image.Gray, width int, height int) {
 
+	// for x := 0; x < width; x++ {
+	// 	for y := 0; y < height; y++ {
+	// 		switch {
+
+	// 		case x == (width/2)+2 || x == (width/2)-2:
+	// 			img.Set(x, y, color.Gray{0xff})
+
+	// 		case y > (height/2)+2 && x < (height/2)-2:
+	// 			img.Set(x, y, color.Gray{0x00})
+	// 		}
+	// 	}
+	// }
+
 	// Set color for each pixel.
 	for x := 0; x < width; x++ {
 		for y := 0; y < height; y++ {
@@ -199,7 +206,11 @@ func drawTestPattern(img *image.Gray, width int, height int) {
 
 			// Center Circle
 			case isCircle((1*width)/2, (1*height)/2, 50, x, y):
+				img.Set(x, y, color.Gray{0xff})
+			case isCircle((1*width)/2, (1*height)/2, 75, x, y):
 				img.Set(x, y, color.Gray{0x77})
+			case isCircle((1*width)/2, (1*height)/2, 100, x, y):
+				img.Set(x, y, color.Gray{0x00})
 
 			// Upper Left Circles
 			case isCircle((1*width)/8, (1*height)/8, 50, x, y):
@@ -213,7 +224,7 @@ func drawTestPattern(img *image.Gray, width int, height int) {
 			case isCircle((2*width)/8, (2*height)/8, 50, x, y):
 				img.Set(x, y, color.Gray{0x77})
 
-			// Upper Right Circle
+			// Upper Right Circles
 			case isCircle((5*width)/8, (1*height)/8, 50, x, y):
 				img.Set(x, y, color.Black)
 			case isCircle((7*width)/8, (1*height)/8, 50, x, y):
@@ -225,7 +236,7 @@ func drawTestPattern(img *image.Gray, width int, height int) {
 			case isCircle((6*width)/8, (2*height)/8, 50, x, y):
 				img.Set(x, y, color.Gray{0x77})
 
-			// Lower Left Circle
+			// Lower Left Circles
 			case isCircle((1*width)/8, (5*height)/8, 50, x, y):
 				img.Set(x, y, color.Black)
 			case isCircle((3*width)/8, (5*height)/8, 50, x, y):
@@ -237,7 +248,7 @@ func drawTestPattern(img *image.Gray, width int, height int) {
 			case isCircle((2*width)/8, (6*height)/8, 50, x, y):
 				img.Set(x, y, color.Gray{0x77})
 
-			// Lower Right Circle
+			// Lower Right Circles
 			case isCircle((5*width)/8, (5*height)/8, 50, x, y):
 				img.Set(x, y, color.Black)
 			case isCircle((7*width)/8, (5*height)/8, 50, x, y):
