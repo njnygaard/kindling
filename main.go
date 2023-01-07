@@ -54,49 +54,91 @@ func main() {
 	// drawTestPattern(img, width, height)
 	// drawGrid(img, width, height)
 
-	// Get Weather
-	w, err := owm.NewCurrent("F", "en", API_KEY)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	w.CurrentByName("Chandler")
-
 	// Draw Text
 	dc := gg.NewContext(width, height)
 	dc.SetRGB(1)
 	dc.Clear()
-
-	// Fancy for Description
-	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", 100); err != nil {
-		panic(err)
-	}
 	dc.SetRGB(0)
-	s := strings.Title(w.Weather[0].Description)
-	dc.DrawStringAnchored(s, float64(width)/2, float64(2*height)/4, 0.5, 0.5)
 
-	// Clean Font for Others
-	if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
+	// Time Tagging (to determine if it is successfully updating)
+	if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 10); err != nil {
 		panic(err)
 	}
-
-	// Time
 	current_time := time.Now()
+	dc.DrawStringAnchored(current_time.Format("Monday, January 2, 2006"), 0, float64(0), 0, 1)
+	dc.DrawStringAnchored(current_time.Format("15:04:05"), float64(width), float64(0), 1.05, 1)
 
-	dc.DrawStringAnchored(current_time.Format("Monday, January 2, 2006"), 0, float64(0), 0, 2)
-	dc.DrawStringAnchored(current_time.Format("15:04:05"), float64(width), float64(0), 1.05, 2)
+	// City Labels
+	if err := dc.LoadFontFace("Fondamento-Regular.ttf", 100); err != nil {
+		panic(err)
+	}
+	// Brisbane
+	dc.DrawStringAnchored("Brisbane", float64(width)/2, float64(1*height)/4, 0.5, -1)
+	// Phoenix
+	dc.DrawStringAnchored("Chandler", float64(width)/2, float64(3*height)/4, 0.5, -1)
 
-	// Temperature
+	// Weather
+
+	// Brisbane
+	w, err := owm.NewCurrent("F", "en", API_KEY)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	w.CurrentByName("Brisbane")
 	ranged := w.Main.TempMax - w.Main.TempMin
 	scaledTemperature := w.Main.Temp - w.Main.TempMin
 	ratio := scaledTemperature / ranged
 
-	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(height), 1.1, -1.5)
+	// Description
+	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", 100); err != nil {
+		panic(err)
+	}
+	s := strings.Title(w.Weather[0].Description)
+	dc.DrawStringAnchored(s, float64(width)/2, float64(1*height)/4, 0.5, 1)
+
+	// Temperature
+	if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
+		panic(err)
+	}
+
+	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(1*height)/4, 1.1, 7)
 
 	if w.Main.TempMin+1 < w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(height), -0.1, -1.5)
+		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(1*height)/4, -0.1, 7)
 	}
 	if w.Main.TempMax-1 > w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(height), 1.1, -1.5)
+		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(1*height)/4, 1.1, 7)
+	}
+
+	// Chandler
+	w, err = owm.NewCurrent("F", "en", API_KEY)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	w.CurrentByName("Chandler")
+	ranged = w.Main.TempMax - w.Main.TempMin
+	scaledTemperature = w.Main.Temp - w.Main.TempMin
+	ratio = scaledTemperature / ranged
+
+	// Description
+	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", 100); err != nil {
+		panic(err)
+	}
+	s = strings.Title(w.Weather[0].Description)
+	dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 1)
+
+	// Temperature
+	if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
+		panic(err)
+	}
+
+	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(3*height)/4, 1.1, 7)
+
+	if w.Main.TempMin+1 < w.Main.Temp {
+		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(3*height)/4, -0.1, 7)
+	}
+	if w.Main.TempMax-1 > w.Main.Temp {
+		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(3*height)/4, 1.1, 7)
 	}
 
 	// Export for Text
