@@ -1,0 +1,10 @@
+[Unit]
+Description=Compiles the Weather image for the Kindling display
+Wants=kindling-weather.timer
+
+[Service]
+Type=oneshot
+ExecStart=/home/drone/workspace/kindling/systemd/scripts/fire.sh
+
+[Install]
+WantedBy=multi-user.target

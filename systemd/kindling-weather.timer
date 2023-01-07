@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer that will make the image for the Kindling weather display
+Requires=kindling-weather.service
+
+[Timer]
+Unit=kindling-weather.service
+OnCalendar=*-*-* *:*:5
+
+[Install]
+WantedBy=timers.target
