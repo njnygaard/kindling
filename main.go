@@ -44,6 +44,12 @@ func main() {
 	// Basics
 	width := 758
 	height := 1024
+
+	var fondamentoSize float64 = 60
+	var winterSongSize float64 = 100
+
+	var cityLabelVerticalOffset float64 = -2
+	var cityLabelHorizontalOffset float64 = 0.5
 	// upLeft := image.Point{0, 0}
 	// lowRight := image.Point{width, height}
 	// img := image.NewGray(image.Rectangle{upLeft, lowRight})
@@ -68,78 +74,119 @@ func main() {
 	dc.DrawStringAnchored(current_time.Format("Monday, January 2, 2006"), 0, float64(0), 0, 1)
 	dc.DrawStringAnchored(current_time.Format("15:04:05"), float64(width), float64(0), 1.05, 1)
 
-	// City Labels
-	if err := dc.LoadFontFace("Fondamento-Regular.ttf", 100); err != nil {
-		panic(err)
-	}
-	// Brisbane
-	dc.DrawStringAnchored("Brisbane", float64(width)/2, float64(1*height)/4, 0.5, -1)
-	// Phoenix
-	dc.DrawStringAnchored("Chandler", float64(width)/2, float64(3*height)/4, 0.5, -1)
-
+	/****************/
+	/*** Brisbane ***/
+	/****************/
 	// Weather
-
-	// Brisbane
 	w, err := owm.NewCurrent("F", "en", API_KEY)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	w.CurrentByName("Brisbane")
-	ranged := w.Main.TempMax - w.Main.TempMin
-	scaledTemperature := w.Main.Temp - w.Main.TempMin
-	ratio := scaledTemperature / ranged
-
+	// City Label
+	if err := dc.LoadFontFace("Fondamento-Regular.ttf", fondamentoSize); err != nil {
+		panic(err)
+	}
+	dc.DrawStringAnchored(fmt.Sprintf("Brisbane %.0f°F", w.Main.Temp), float64(width)/2, float64(1*height)/6, cityLabelHorizontalOffset, cityLabelVerticalOffset)
+	// ranged := w.Main.TempMax - w.Main.TempMin
+	// scaledTemperature := w.Main.Temp - w.Main.TempMin
+	// ratio := scaledTemperature / ranged
 	// Description
-	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", 100); err != nil {
+	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", winterSongSize); err != nil {
 		panic(err)
 	}
 	s := strings.Title(w.Weather[0].Description)
-	dc.DrawStringAnchored(s, float64(width)/2, float64(1*height)/4, 0.5, 1)
-
+	dc.DrawStringAnchored(s, float64(width)/2, float64(1*height)/6, 0.5, 1)
 	// Temperature
-	if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
-		panic(err)
-	}
+	// if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
+	// 	panic(err)
+	// }
 
-	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(1*height)/4, 1.1, 7)
+	// Temp Scale
+	// dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(1*height)/6, 1.1, 7)
+	// if w.Main.TempMin+1 < w.Main.Temp {
+	// 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(1*height)/6, -0.1, 7)
+	// }
+	// if w.Main.TempMax-1 > w.Main.Temp {
+	// 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(1*height)/6, 1.1, 7)
+	// }
 
-	if w.Main.TempMin+1 < w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(1*height)/4, -0.1, 7)
-	}
-	if w.Main.TempMax-1 > w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(1*height)/4, 1.1, 7)
-	}
-
-	// Chandler
+	/*********************/
+	/*** San Francisco ***/
+	/*********************/
+	// Weather
 	w, err = owm.NewCurrent("F", "en", API_KEY)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	w.CurrentByName("Chandler")
-	ranged = w.Main.TempMax - w.Main.TempMin
-	scaledTemperature = w.Main.Temp - w.Main.TempMin
-	ratio = scaledTemperature / ranged
-
+	w.CurrentByName("San Francisco")
+	// City Label
+	if err := dc.LoadFontFace("Fondamento-Regular.ttf", fondamentoSize); err != nil {
+		panic(err)
+	}
+	dc.DrawStringAnchored(fmt.Sprintf("San Francisco %.0f°F", w.Main.Temp), float64(width)/2, float64(3*height)/6, cityLabelHorizontalOffset, cityLabelVerticalOffset)
+	// ranged = w.Main.TempMax - w.Main.TempMin
+	// scaledTemperature = w.Main.Temp - w.Main.TempMin
+	// ratio = scaledTemperature / ranged
 	// Description
-	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", 100); err != nil {
+	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", winterSongSize); err != nil {
 		panic(err)
 	}
 	s = strings.Title(w.Weather[0].Description)
-	dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 1)
-
+	dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/6, 0.5, 1)
 	// Temperature
-	if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
+	// if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
+	// 	panic(err)
+	// }
+
+	// Temp Scale
+	// dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(3*height)/6, 1.1, 7)
+	// if w.Main.TempMin+1 < w.Main.Temp {
+	// 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(3*height)/6, -0.1, 7)
+	// }
+	// if w.Main.TempMax-1 > w.Main.Temp {
+	// 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(3*height)/6, 1.1, 7)
+	// }
+
+	/****************/
+	/*** Saint-Émilion ***/
+	/****************/
+	// Weather
+	w, err = owm.NewCurrent("F", "en", API_KEY)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	w.CurrentByName("Saint-Émilion")
+	// City Label
+	if err := dc.LoadFontFace("Fondamento-Regular.ttf", fondamentoSize); err != nil {
 		panic(err)
 	}
-
-	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(3*height)/4, 1.1, 7)
-
-	if w.Main.TempMin+1 < w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(3*height)/4, -0.1, 7)
+	dc.DrawStringAnchored(fmt.Sprintf("Saint-Émilion %.0f°F", w.Main.Temp), float64(width)/2, float64(5*height)/6, cityLabelHorizontalOffset, cityLabelVerticalOffset)
+	// ranged = w.Main.TempMax - w.Main.TempMin
+	// scaledTemperature = w.Main.Temp - w.Main.TempMin
+	// ratio = scaledTemperature / ranged
+	// Description
+	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", winterSongSize); err != nil {
+		panic(err)
 	}
-	if w.Main.TempMax-1 > w.Main.Temp {
-		dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(3*height)/4, 1.1, 7)
-	}
+	s = strings.Title(w.Weather[0].Description)
+	dc.DrawStringAnchored(s, float64(width)/2, float64(5*height)/6, 0.5, 1)
+	// Temperature
+	// if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
+	// 	panic(err)
+	// }
+
+	// Temp Scale
+	// fmt.Println("w.Main.Temp", w.Main.Temp)
+	// fmt.Println("w.Main.TempMin", w.Main.TempMin)
+	// fmt.Println("w.Main.TempMax", w.Main.TempMax)
+	// dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(5*height)/6, 1.1, 7)
+	// if w.Main.TempMin+1 < w.Main.Temp {
+	// 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(5*height)/6, -0.1, 7)
+	// }
+	// if w.Main.TempMax-1 > w.Main.Temp {
+	// 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(5*height)/6, 1.1, 7)
+	// }
 
 	// Export for Text
 	dc.SavePNG("out.png")
@@ -147,6 +194,10 @@ func main() {
 	// Encode as PNG for Shapes
 	// f, _ := os.Create("image.png")
 	// png.Encode(f, img)
+}
+
+func drawThird(position int) {
+
 }
 
 // func formatTemp(min float64, temp float64, max float64) (f string) {
