@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"image"
-	"image/color"
 	"log"
 	"math"
 	"strings"
@@ -42,11 +40,11 @@ const (
 
 func main() {
 	// Basics
-	width := 758
-	height := 1024
+	width := 800
+	height := 480
 
 	var fondamentoSize float64 = 60
-	var winterSongSize float64 = 100
+	var winterSongSize float64 = 90
 
 	var cityLabelVerticalOffset float64 = -2
 	var cityLabelHorizontalOffset float64 = 0.5
@@ -87,7 +85,7 @@ func main() {
 	if err := dc.LoadFontFace("Fondamento-Regular.ttf", fondamentoSize); err != nil {
 		panic(err)
 	}
-	dc.DrawStringAnchored(fmt.Sprintf("Brisbane %.0f°F", w.Main.Temp), float64(width)/2, float64(1*height)/6, cityLabelHorizontalOffset, cityLabelVerticalOffset)
+	dc.DrawStringAnchored(fmt.Sprintf("Brisbane %.0f°F", w.Main.Temp), float64(width)/2, float64(1*height+120)/4, cityLabelHorizontalOffset, cityLabelVerticalOffset)
 	// ranged := w.Main.TempMax - w.Main.TempMin
 	// scaledTemperature := w.Main.Temp - w.Main.TempMin
 	// ratio := scaledTemperature / ranged
@@ -96,7 +94,7 @@ func main() {
 		panic(err)
 	}
 	s := strings.Title(w.Weather[0].Description)
-	dc.DrawStringAnchored(s, float64(width)/2, float64(1*height)/6, 0.5, 1)
+	dc.DrawStringAnchored(s, float64(width)/2, float64(1*height)/4, 0.5, 1)
 	// Temperature
 	// if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
 	// 	panic(err)
@@ -111,43 +109,43 @@ func main() {
 	// 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(1*height)/6, 1.1, 7)
 	// }
 
-	/*********************/
-	/*** San Francisco ***/
-	/*********************/
-	// Weather
-	w, err = owm.NewCurrent("F", "en", API_KEY)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	w.CurrentByName("San Francisco")
-	// City Label
-	if err := dc.LoadFontFace("Fondamento-Regular.ttf", fondamentoSize); err != nil {
-		panic(err)
-	}
-	dc.DrawStringAnchored(fmt.Sprintf("San Francisco %.0f°F", w.Main.Temp), float64(width)/2, float64(3*height)/6, cityLabelHorizontalOffset, cityLabelVerticalOffset)
-	// ranged = w.Main.TempMax - w.Main.TempMin
-	// scaledTemperature = w.Main.Temp - w.Main.TempMin
-	// ratio = scaledTemperature / ranged
-	// Description
-	if err := dc.LoadFontFace("WinterSong-owRGB.ttf", winterSongSize); err != nil {
-		panic(err)
-	}
-	s = strings.Title(w.Weather[0].Description)
-	dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/6, 0.5, 1)
-	// Temperature
-	// if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
+	// /*********************/
+	// /*** San Francisco ***/
+	// /*********************/
+	// // Weather
+	// w, err = owm.NewCurrent("F", "en", API_KEY)
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
+	// w.CurrentByName("San Francisco")
+	// // City Label
+	// if err := dc.LoadFontFace("Fondamento-Regular.ttf", fondamentoSize); err != nil {
 	// 	panic(err)
 	// }
-
-	// Temp Scale
-	// dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(3*height)/6, 1.1, 7)
-	// if w.Main.TempMin+1 < w.Main.Temp {
-	// 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(3*height)/6, -0.1, 7)
+	// dc.DrawStringAnchored(fmt.Sprintf("San Francisco %.0f°F", w.Main.Temp), float64(width)/2, float64(3*height)/6, cityLabelHorizontalOffset, cityLabelVerticalOffset)
+	// // ranged = w.Main.TempMax - w.Main.TempMin
+	// // scaledTemperature = w.Main.Temp - w.Main.TempMin
+	// // ratio = scaledTemperature / ranged
+	// // Description
+	// if err := dc.LoadFontFace("WinterSong-owRGB.ttf", winterSongSize); err != nil {
+	// 	panic(err)
 	// }
-	// if w.Main.TempMax-1 > w.Main.Temp {
-	// 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(3*height)/6, 1.1, 7)
-	// }
-
+	// s = strings.Title(w.Weather[0].Description)
+	// dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/6, 0.5, 1)
+	// // Temperature
+	// // if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
+	// // 	panic(err)
+	// // }
+	//
+	// // Temp Scale
+	// // dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.Temp), float64(width)*ratio, float64(3*height)/6, 1.1, 7)
+	// // if w.Main.TempMin+1 < w.Main.Temp {
+	// // 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMin), 0, float64(3*height)/6, -0.1, 7)
+	// // }
+	// // if w.Main.TempMax-1 > w.Main.Temp {
+	// // 	dc.DrawStringAnchored(fmt.Sprintf("%.0f°F", w.Main.TempMax), float64(width), float64(3*height)/6, 1.1, 7)
+	// // }
+	//
 	/****************/
 	/*** Saint-Émilion ***/
 	/****************/
@@ -161,7 +159,7 @@ func main() {
 	if err := dc.LoadFontFace("Fondamento-Regular.ttf", fondamentoSize); err != nil {
 		panic(err)
 	}
-	dc.DrawStringAnchored(fmt.Sprintf("Saint-Émilion %.0f°F", w.Main.Temp), float64(width)/2, float64(5*height)/6, cityLabelHorizontalOffset, cityLabelVerticalOffset)
+	dc.DrawStringAnchored(fmt.Sprintf("Saint-Émilion %.0f°F", w.Main.Temp), float64(width)/2, float64(3*height+120)/4, cityLabelHorizontalOffset, cityLabelVerticalOffset)
 	// ranged = w.Main.TempMax - w.Main.TempMin
 	// scaledTemperature = w.Main.Temp - w.Main.TempMin
 	// ratio = scaledTemperature / ranged
@@ -170,7 +168,7 @@ func main() {
 		panic(err)
 	}
 	s = strings.Title(w.Weather[0].Description)
-	dc.DrawStringAnchored(s, float64(width)/2, float64(5*height)/6, 0.5, 1)
+	dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 1)
 	// Temperature
 	// if err := dc.LoadFontFace("SourceCodePro-Regular.ttf", 30); err != nil {
 	// 	panic(err)
@@ -257,130 +255,130 @@ func isGrid(x int, y int, width int, height int, stroke int) bool {
 	return false
 }
 
-func drawGrid(img *image.Gray, width int, height int) {
+// func drawGrid(img *image.Gray, width int, height int) {
+//
+// 	stroke := 2
+// 	// Set color for each pixel.
+// 	for x := 0; x < width; x++ {
+// 		for y := 0; y < height; y++ {
+// 			switch {
+//
+// 			// Border
+// 			case isGrid(x, y, width, height, stroke):
+// 				img.Set(x, y, color.Black)
+//
+// 			default:
+// 				img.Set(x, y, color.White)
+// 			}
+// 		}
+// 	}
+//
+// }
 
-	stroke := 2
-	// Set color for each pixel.
-	for x := 0; x < width; x++ {
-		for y := 0; y < height; y++ {
-			switch {
-
-			// Border
-			case isGrid(x, y, width, height, stroke):
-				img.Set(x, y, color.Black)
-
-			default:
-				img.Set(x, y, color.White)
-			}
-		}
-	}
-
-}
-
-func drawTestPattern(img *image.Gray, width int, height int) {
-
-	// for x := 0; x < width; x++ {
-	// 	for y := 0; y < height; y++ {
-	// 		switch {
-
-	// 		case x == (width/2)+2 || x == (width/2)-2:
-	// 			img.Set(x, y, color.Gray{0xff})
-
-	// 		case y > (height/2)+2 && x < (height/2)-2:
-	// 			img.Set(x, y, color.Gray{0x00})
-	// 		}
-	// 	}
-	// }
-
-	// Set color for each pixel.
-	for x := 0; x < width; x++ {
-		for y := 0; y < height; y++ {
-			switch {
-
-			// Center Circle
-			case isCircle((1*width)/2, (1*height)/2, 50, x, y):
-				img.Set(x, y, color.Gray{0xff})
-			case isCircle((1*width)/2, (1*height)/2, 75, x, y):
-				img.Set(x, y, color.Gray{0x77})
-			case isCircle((1*width)/2, (1*height)/2, 100, x, y):
-				img.Set(x, y, color.Gray{0x00})
-
-			// Upper Left Circles
-			case isCircle((1*width)/8, (1*height)/8, 50, x, y):
-				img.Set(x, y, color.Black)
-			case isCircle((3*width)/8, (1*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0x33})
-			case isCircle((1*width)/8, (3*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0xAA})
-			case isCircle((3*width)/8, (3*height)/8, 50, x, y):
-				img.Set(x, y, color.White)
-			case isCircle((2*width)/8, (2*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0x77})
-
-			// Upper Right Circles
-			case isCircle((5*width)/8, (1*height)/8, 50, x, y):
-				img.Set(x, y, color.Black)
-			case isCircle((7*width)/8, (1*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0x33})
-			case isCircle((5*width)/8, (3*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0xAA})
-			case isCircle((7*width)/8, (3*height)/8, 50, x, y):
-				img.Set(x, y, color.White)
-			case isCircle((6*width)/8, (2*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0x77})
-
-			// Lower Left Circles
-			case isCircle((1*width)/8, (5*height)/8, 50, x, y):
-				img.Set(x, y, color.Black)
-			case isCircle((3*width)/8, (5*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0x33})
-			case isCircle((1*width)/8, (7*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0xAA})
-			case isCircle((3*width)/8, (7*height)/8, 50, x, y):
-				img.Set(x, y, color.White)
-			case isCircle((2*width)/8, (6*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0x77})
-
-			// Lower Right Circles
-			case isCircle((5*width)/8, (5*height)/8, 50, x, y):
-				img.Set(x, y, color.Black)
-			case isCircle((7*width)/8, (5*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0x33})
-			case isCircle((5*width)/8, (7*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0xAA})
-			case isCircle((7*width)/8, (7*height)/8, 50, x, y):
-				img.Set(x, y, color.White)
-			case isCircle((6*width)/8, (6*height)/8, 50, x, y):
-				img.Set(x, y, color.Gray{0x77})
-
-			// First Quadrant
-			case x < width/2 && y < height/2 && x%2 == 0:
-				img.Set(x, y, color.Black)
-			case x < width/2 && y < height/2 && x%2 == 1:
-				img.Set(x, y, color.White)
-
-			// Second Quadrant
-			case x > width/2 && y < height/2 && x%2 == 0:
-				img.Set(x, y, color.Black)
-			case x > width/2 && y < height/2 && x%2 == 1:
-				img.Set(x, y, color.Black)
-
-			// Third Quadrant
-			case x < width/2 && y > height/2 && x%2 == 0:
-				img.Set(x, y, color.White)
-			case x < width/2 && y > height/2 && x%2 == 1:
-				img.Set(x, y, color.White)
-
-			// Fourth Quadrant
-			case x > width/2 && y > height/2 && x%2 == 0:
-				img.Set(x, y, color.Black)
-			case x > width/2 && y > height/2 && x%2 == 1:
-				img.Set(x, y, color.White)
-
-			default:
-				img.Set(x, y, color.White)
-			}
-		}
-	}
-
-}
+// func drawTestPattern(img *image.Gray, width int, height int) {
+//
+// 	// for x := 0; x < width; x++ {
+// 	// 	for y := 0; y < height; y++ {
+// 	// 		switch {
+//
+// 	// 		case x == (width/2)+2 || x == (width/2)-2:
+// 	// 			img.Set(x, y, color.Gray{0xff})
+//
+// 	// 		case y > (height/2)+2 && x < (height/2)-2:
+// 	// 			img.Set(x, y, color.Gray{0x00})
+// 	// 		}
+// 	// 	}
+// 	// }
+//
+// 	// Set color for each pixel.
+// 	for x := 0; x < width; x++ {
+// 		for y := 0; y < height; y++ {
+// 			switch {
+//
+// 			// Center Circle
+// 			case isCircle((1*width)/2, (1*height)/2, 50, x, y):
+// 				img.Set(x, y, color.Gray{0xff})
+// 			case isCircle((1*width)/2, (1*height)/2, 75, x, y):
+// 				img.Set(x, y, color.Gray{0x77})
+// 			case isCircle((1*width)/2, (1*height)/2, 100, x, y):
+// 				img.Set(x, y, color.Gray{0x00})
+//
+// 			// Upper Left Circles
+// 			case isCircle((1*width)/8, (1*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Black)
+// 			case isCircle((3*width)/8, (1*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0x33})
+// 			case isCircle((1*width)/8, (3*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0xAA})
+// 			case isCircle((3*width)/8, (3*height)/8, 50, x, y):
+// 				img.Set(x, y, color.White)
+// 			case isCircle((2*width)/8, (2*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0x77})
+//
+// 			// Upper Right Circles
+// 			case isCircle((5*width)/8, (1*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Black)
+// 			case isCircle((7*width)/8, (1*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0x33})
+// 			case isCircle((5*width)/8, (3*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0xAA})
+// 			case isCircle((7*width)/8, (3*height)/8, 50, x, y):
+// 				img.Set(x, y, color.White)
+// 			case isCircle((6*width)/8, (2*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0x77})
+//
+// 			// Lower Left Circles
+// 			case isCircle((1*width)/8, (5*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Black)
+// 			case isCircle((3*width)/8, (5*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0x33})
+// 			case isCircle((1*width)/8, (7*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0xAA})
+// 			case isCircle((3*width)/8, (7*height)/8, 50, x, y):
+// 				img.Set(x, y, color.White)
+// 			case isCircle((2*width)/8, (6*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0x77})
+//
+// 			// Lower Right Circles
+// 			case isCircle((5*width)/8, (5*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Black)
+// 			case isCircle((7*width)/8, (5*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0x33})
+// 			case isCircle((5*width)/8, (7*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0xAA})
+// 			case isCircle((7*width)/8, (7*height)/8, 50, x, y):
+// 				img.Set(x, y, color.White)
+// 			case isCircle((6*width)/8, (6*height)/8, 50, x, y):
+// 				img.Set(x, y, color.Gray{0x77})
+//
+// 			// First Quadrant
+// 			case x < width/2 && y < height/2 && x%2 == 0:
+// 				img.Set(x, y, color.Black)
+// 			case x < width/2 && y < height/2 && x%2 == 1:
+// 				img.Set(x, y, color.White)
+//
+// 			// Second Quadrant
+// 			case x > width/2 && y < height/2 && x%2 == 0:
+// 				img.Set(x, y, color.Black)
+// 			case x > width/2 && y < height/2 && x%2 == 1:
+// 				img.Set(x, y, color.Black)
+//
+// 			// Third Quadrant
+// 			case x < width/2 && y > height/2 && x%2 == 0:
+// 				img.Set(x, y, color.White)
+// 			case x < width/2 && y > height/2 && x%2 == 1:
+// 				img.Set(x, y, color.White)
+//
+// 			// Fourth Quadrant
+// 			case x > width/2 && y > height/2 && x%2 == 0:
+// 				img.Set(x, y, color.Black)
+// 			case x > width/2 && y > height/2 && x%2 == 1:
+// 				img.Set(x, y, color.White)
+//
+// 			default:
+// 				img.Set(x, y, color.White)
+// 			}
+// 		}
+// 	}
+//
+// }

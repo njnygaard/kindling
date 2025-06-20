@@ -4,10 +4,10 @@ Wants=kindling-weather.timer
 
 [Service]
 Environment=HOME=/home/drone
-Environment=GOROOT=/usr/lib/go
-Environment=GOPATH=/home/drone/development/go:/home/drone/development/go/bin:/usr/lib/go/bin
+Environment=GOROOT=/snap/bin/go
+Environment=GOPATH=/home/drone/go:/home/drone/go/bin
 Type=oneshot
-ExecStart=/home/drone/workspace/kindling/systemd/scripts/fire.sh
+ExecStart=/home/drone/development/kindling/systemd/scripts/fire.sh
 
 [Install]
 WantedBy=multi-user.target
