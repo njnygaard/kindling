@@ -187,7 +187,7 @@ func main() {
 	// }
 
 	// Export for Text
-	dc.SavePNG("out.png")
+	dc.SavePNG("weather.png")
 
 	// Encode as PNG for Shapes
 	// f, _ := os.Create("image.png")
