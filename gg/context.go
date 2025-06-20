@@ -54,7 +54,7 @@ type Context struct {
 	width         int
 	height        int
 	rasterizer    *raster.Rasterizer
-	im            *image.Gray
+	im            *image.Paletted
 	mask          *image.Alpha
 	color         color.Gray
 	fillPattern   Pattern
@@ -79,20 +79,19 @@ type Context struct {
 // NewContext creates a new image.RGBA with the specified width and height
 // and prepares a context for rendering onto that image.
 func NewContext(width, height int) *Context {
-	return NewContextForGray(image.NewGray(image.Rect(0, 0, width, height)))
+	p := color.Palette([]color.Color{color.White, color.Black})
+	return NewContextForGray(image.NewPaletted(image.Rect(0, 0, width, height), p))
 }
 
-// NewContextForRGBA prepares a context for rendering onto the specified image.
-// No copy is made.
-func NewContextForGray(im *image.Gray) *Context {
+func NewContextForGray(im *image.Paletted) *Context {
 	w := im.Bounds().Size().X
 	h := im.Bounds().Size().Y
 	return &Context{
-		width:         w,
-		height:        h,
-		rasterizer:    raster.NewRasterizer(w, h),
-		im:            im,
-		color:         color.Gray{0xff},
+		width:      w,
+		height:     h,
+		rasterizer: raster.NewRasterizer(w, h),
+		im:         im,
+		// color:         color.Palette([]color.Color{color.White, color.Black}),
 		fillPattern:   defaultFillStyle,
 		strokePattern: defaultStrokeStyle,
 		lineWidth:     1,
@@ -112,8 +111,14 @@ func (dc *Context) SetRGB(r float64) {
 // SetRGBA sets the current color. r, g, b, a values should be between 0 and 1,
 // inclusive.
 func (dc *Context) SetRGBA(r float64) {
-	dc.color = color.Gray{
-		uint8(r * 255),
+	if r > 0.75 {
+		dc.color = color.Gray{
+			uint8(1 * 255),
+		}
+	} else {
+		dc.color = color.Gray{
+			uint8(0 * 255),
+		}
 	}
 	dc.setFillAndStrokeColor(dc.color)
 }
@@ -170,7 +175,8 @@ func (dc *Context) DrawStringAnchored(s string, x, y, ax, ay float64) {
 	if dc.mask == nil {
 		dc.drawString(dc.im, s, x, y)
 	} else {
-		im := image.NewGray(image.Rect(0, 0, dc.width, dc.height))
+		p := color.Palette([]color.Color{color.White, color.Black})
+		im := image.NewPaletted(image.Rect(0, 0, dc.width, dc.height), p)
 		dc.drawString(im, s, x, y)
 		draw.DrawMask(dc.im, dc.im.Bounds(), im, image.ZP, dc.mask, image.ZP, draw.Over)
 	}
@@ -186,7 +192,7 @@ func (dc *Context) MeasureString(s string) (w, h float64) {
 	return float64(a >> 6), dc.fontHeight
 }
 
-func (dc *Context) drawString(im *image.Gray, s string, x, y float64) {
+func (dc *Context) drawString(im *image.Paletted, s string, x, y float64) {
 	d := &font.Drawer{
 		Dst:  im,
 		Src:  image.NewUniform(dc.color),
