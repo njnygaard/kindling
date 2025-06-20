@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 	"log"
 	"time"
+
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 
 	owm "github.com/briandowns/openweathermap"
 	"github.com/njnygaard/kindling/gg"
@@ -95,7 +96,7 @@ func main() {
 	dc.DrawStringAnchored(s, float64(width)/2, float64(3*height)/4, 0.5, 1)
 
 	// Export for Text
-	err = dc.SavePNG("weather.png")
+	err = dc.SavePNG("trmnl/weather.png")
 	if err != nil {
 		return
 	}
