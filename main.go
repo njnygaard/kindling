@@ -134,7 +134,7 @@ func generateTestPattern(width, height int) {
 	gg.DrawTestPattern(img, width, height)
 
 	// Save to file
-	file, err := os.Create("test_pattern.png")
+	file, err := os.Create("trmnl/test_pattern.png")
 	if err != nil {
 		panic(err)
 	}
