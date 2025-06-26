@@ -9,3 +9,4 @@ rm /home/drone/development/kindling/trmnl/*
 # Convert and Deploy the images to the site.
 convert /home/drone/development/kindling/trmnl/weather.png -monochrome -colors 2 -depth 1 -strip png:/var/www/sploo.sh/trmnl/weather.png
 convert /home/drone/development/kindling/trmnl/test_pattern.png -monochrome -colors 2 -depth 1 -strip png:/var/www/sploo.sh/trmnl/test_pattern.png
+convert /home/drone/development/kindling/trmnl/dither.png -monochrome -colors 2 -depth 1 -strip png:/var/www/sploo.sh/trmnl/dither.png
