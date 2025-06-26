@@ -104,31 +104,8 @@ func generateWeather(width, height int) {
 }
 
 func generateTestPattern(width, height int) {
-	//black
-	//gray-1
-	//gray-2
-	//gray-3
-	//gray-4
-	//gray-5
-	//gray-6
-	//gray-7
-	//white
-	// Draw Text
-	//dc := gg.NewContext(width, height)
-	//dc.SetRGB(1)
-	//dc.Clear()
-	//dc.SetRGB(0)
-	//// Fill the image with a solid color (e.g., blue)
-	//blue := color.RGBA{0, 0, 255, 255} // Red, Green, Blue, Alpha
-	//for y := 0; y < height; y++ {
-	//	for x := 0; x < width; x++ {
-	//		img.Set(x, y, blue)
-	//	}
-	//}
-	//dc.DrawStringAnchored()
-
 	// Create a new image
-	img := image.NewRGBA(image.Rect(0, 0, width, height))
+	img := image.NewGray(image.Rect(0, 0, width, height))
 
 	// Draw the classic TV test pattern
 	gg.DrawTestPattern(img, width, height)
@@ -138,7 +115,12 @@ func generateTestPattern(width, height int) {
 	if err != nil {
 		panic(err)
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+
+		}
+	}(file)
 
 	err = png.Encode(file, img)
 	if err != nil {
@@ -149,11 +131,73 @@ func generateTestPattern(width, height int) {
 
 }
 
+func generateTestPatternBW(width, height int) {
+	// Create a new image
+	img := image.NewGray(image.Rect(0, 0, width, height))
+
+	// Draw the black & white dithered test pattern
+	gg.DrawTestPatternBW(img, width, height)
+
+	// Save to file
+	file, err := os.Create("trmnl/test_pattern_bw.png")
+	if err != nil {
+		panic(err)
+	}
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+
+		}
+	}(file)
+
+	err = png.Encode(file, img)
+	if err != nil {
+		panic(err)
+	}
+
+	//println("Black & white test pattern saved as test_pattern_bw.png")
+}
+
+func generateDitherDemo(width, height int) {
+	// Create a simple demonstration of dithering
+	img := image.NewGray(image.Rect(0, 0, width, height))
+
+	// Create a gradient from black to white using dithering
+	for y := 0; y < height; y++ {
+		// Calculate gray level based on Y position (0 to 64 (8x8))
+		grayLevel := int(float64(y) / float64(height) * 64)
+
+		for x := 0; x < width; x++ {
+			// Use the dithering function to convert gray level to black/white
+			pixelColor := gg.DitherPixel(grayLevel, x, y)
+			img.Set(x, y, pixelColor)
+		}
+	}
+
+	// Save to file
+	file, err := os.Create("trmnl/dither.png")
+	if err != nil {
+		panic(err)
+	}
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+
+		}
+	}(file)
+
+	err = png.Encode(file, img)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func main() {
 	// Basics
 	width := 800
 	height := 480
 
 	generateWeather(width, height)
-
+	generateTestPatternBW(width, height)
+	generateDitherDemo(width, height)
 }
