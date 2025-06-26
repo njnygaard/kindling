@@ -1,5 +1,5 @@
 [Unit]
-Description=Compiles the Weather image for the Kindling display
+Description=Compiles the Weather and Test Pattern image for the Kindling display
 Wants=kindling-weather.timer
 
 [Service]

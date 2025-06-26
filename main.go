@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"image"
+	"image/png"
 	"log"
+	"os"
 	"time"
 
 	"golang.org/x/text/cases"
@@ -16,11 +19,7 @@ const (
 	ApiKey = "b40995f7e1911e427c0700778e542369"
 )
 
-func main() {
-	// Basics
-	width := 800
-	height := 480
-
+func generateWeather(width, height int) {
 	var fondamentoSize float64 = 60
 	var winterSongSize float64 = 90
 
@@ -100,4 +99,61 @@ func main() {
 	if err != nil {
 		return
 	}
+
+	generateTestPattern(width, height)
+}
+
+func generateTestPattern(width, height int) {
+	//black
+	//gray-1
+	//gray-2
+	//gray-3
+	//gray-4
+	//gray-5
+	//gray-6
+	//gray-7
+	//white
+	// Draw Text
+	//dc := gg.NewContext(width, height)
+	//dc.SetRGB(1)
+	//dc.Clear()
+	//dc.SetRGB(0)
+	//// Fill the image with a solid color (e.g., blue)
+	//blue := color.RGBA{0, 0, 255, 255} // Red, Green, Blue, Alpha
+	//for y := 0; y < height; y++ {
+	//	for x := 0; x < width; x++ {
+	//		img.Set(x, y, blue)
+	//	}
+	//}
+	//dc.DrawStringAnchored()
+
+	// Create a new image
+	img := image.NewRGBA(image.Rect(0, 0, width, height))
+
+	// Draw the classic TV test pattern
+	gg.DrawTestPattern(img, width, height)
+
+	// Save to file
+	file, err := os.Create("test_pattern.png")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	err = png.Encode(file, img)
+	if err != nil {
+		panic(err)
+	}
+
+	//println("TV test pattern saved as tv_test_pattern.png")
+
+}
+
+func main() {
+	// Basics
+	width := 800
+	height := 480
+
+	generateWeather(width, height)
+
 }
