@@ -29,6 +29,32 @@ var (
 	defaultStrokeStyle = NewSolidPattern(color.Black)
 )
 
+func minimum(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+type RepeatOp int
+
+type Pattern interface {
+	ColorAt(x, y int) color.Color
+}
+
+// Solid Pattern
+type solidPattern struct {
+	color color.Color
+}
+
+func (p *solidPattern) ColorAt(_, _ int) color.Color {
+	return p.color
+}
+
+func NewSolidPattern(color color.Color) Pattern {
+	return &solidPattern{color: color}
+}
+
 type Context struct {
 	width         int
 	height        int

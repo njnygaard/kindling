@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"image"
+	"image/color"
 	"image/png"
 	"log"
+	"math"
 	"os"
 	"time"
 
@@ -158,24 +160,77 @@ func generateTestPatternBW(width, height int) {
 	//println("Black & white test pattern saved as test_pattern_bw.png")
 }
 
-func generateDitherDemo(width, height int) {
+func generateCircularGradient(x, y, width, height int, invert bool) (grayLevel int) {
+	// Calculate distance from center
+	centerX := width / 2
+	centerY := height / 2
+	dx := float64(x - centerX)
+	dy := float64(y - centerY)
+
+	// Normalize distance to create gradient
+	maxDist := math.Sqrt(float64(centerX*centerX + centerY*centerY))
+	dist := math.Sqrt(dx*dx + dy*dy)
+
+	// Calculate gradient value (white center by default)
+	gradient := (1.0 - dist/maxDist) * 64
+	if invert {
+		gradient = 64 - gradient // Invert to make black center
+	}
+
+	grayLevel = int(gradient)
+	if grayLevel < 0 {
+		grayLevel = 0
+	}
+	return
+}
+
+func generateSquareGradient(x, y, width, height int, invert bool) (grayLevel int) {
+	// Calculate normalized distances from edges
+	normalizedX := math.Abs(float64(x)-float64(width)/2) / (float64(width) / 2)
+	normalizedY := math.Abs(float64(y)-float64(height)/2) / (float64(height) / 2)
+
+	// Take the maximum of the normalized distances to create square gradient
+	maxNormalizedDist := math.Max(normalizedX, normalizedY)
+
+	// Create sharp falloff to black at edges by squaring the distance
+	// and using a smaller scale factor
+	gradient := (1.0 - maxNormalizedDist*maxNormalizedDist) * 64
+	if invert {
+		gradient = 64 - gradient
+	}
+	grayLevel = int(gradient)
+	if grayLevel < 0 {
+		grayLevel = 0
+	}
+	return
+}
+
+func generateDitherDemo(width, height int, shape string, invert bool, filename string) {
 	// Create a simple demonstration of dithering
 	img := image.NewGray(image.Rect(0, 0, width, height))
 
 	// Create a gradient from black to white using dithering
 	for y := 0; y < height; y++ {
 		// Calculate gray level based on Y position (0 to 64 (8x8))
-		grayLevel := int(float64(y) / float64(height) * 64)
+		// grayLevel := int(float64(y) / float64(height) * 64)
 
 		for x := 0; x < width; x++ {
 			// Use the dithering function to convert gray level to black/white
-			pixelColor := gg.DitherPixel(grayLevel, x, y)
+			var pixelColor color.Color
+			switch shape {
+			case "square":
+				pixelColor = gg.DitherPixel(generateSquareGradient(x, y, width, height, invert), x, y)
+			case "circle":
+				pixelColor = gg.DitherPixel(generateCircularGradient(x, y, width, height, invert), x, y)
+			default:
+				panic("Invalid shape")
+			}
 			img.Set(x, y, pixelColor)
 		}
 	}
 
 	// Save to file
-	file, err := os.Create("trmnl/dither.png")
+	file, err := os.Create(fmt.Sprintf("trmnl/%s.png", filename))
 	if err != nil {
 		panic(err)
 	}
@@ -198,6 +253,12 @@ func main() {
 	height := 480
 
 	generateWeather(width, height)
-	generateTestPatternBW(width, height)
-	generateDitherDemo(width, height)
+	// I don't really like these test patterns.
+	// The dithering demo is better.
+	// generateTestPattern(width, height)
+	// generateTestPatternBW(width, height)
+	generateDitherDemo(width, height, "square", false, "dither_square")
+	generateDitherDemo(width, height, "circle", false, "dither_circle")
+	generateDitherDemo(width, height, "square", true, "dither_square_invert")
+	generateDitherDemo(width, height, "circle", true, "dither_circle_invert")
 }
