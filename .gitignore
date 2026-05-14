@@ -24,3 +24,7 @@ weather.png
 tv_test_pattern.png
 test_pattern.png
 trmnl/*.png
+
+# Python helper bytecode
+__pycache__/
+*.py[cod]
