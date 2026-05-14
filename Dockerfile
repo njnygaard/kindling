@@ -28,8 +28,8 @@ ENV APP_DIR=/app \
     KINDLING_BIN=/app/kindling \
     SOURCE_IMAGE=/app/trmnl/weather.png \
     STAGING_DIR_LOCAL=/uploads \
-    STAGING_FILENAME=kindling_weather.bmp \
-    STAGING_PATH_TERMINUS=/app/public/uploads/kindling_weather.bmp \
+    STAGING_FILENAME=kindling_weather.png \
+    STAGING_PATH_TERMINUS=/app/public/uploads/kindling_weather.png \
     STATE_FILE=/state/kindling-weather-screen-id \
     INTERVAL_SECONDS=300
 

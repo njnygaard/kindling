@@ -26,8 +26,8 @@ The preferred homelab deployment is a Docker Compose stack on `tatajuba` at:
 The container:
 
 1. runs the Go renderer;
-2. converts `trmnl/weather.png` to a 1-bit 800×480 BMP with ImageMagick;
-3. writes the BMP into the shared `trmnl-byos_web-uploads` Docker volume; and
+2. converts `trmnl/weather.png` to a 2-bit 800×480 PNG with ImageMagick;
+3. writes the PNG into the shared `trmnl-byos_web-uploads` Docker volume; and
 4. POSTs/PATCHes Terminus with `uri + preprocessed: true`.
 
 This mirrors the `photo-gallery` TRMNL integration and avoids Terminus's HTML

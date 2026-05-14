@@ -3,7 +3,7 @@
 # Deploy convention on tatajuba:
 #   /home/drone/staging/tatajuba/kindling
 #
-# This service renders the 800x480 weather screen locally, writes a 1-bit BMP
+# This service renders the 800x480 weather screen locally, writes a 2-bit PNG
 # into Terminus's shared uploads volume, and updates a Terminus screen using
 # uri+preprocessed:true.
 

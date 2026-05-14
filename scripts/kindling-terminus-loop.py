@@ -2,7 +2,7 @@
 """Render Kindling weather and publish it to Terminus on a loop.
 
 The container runs the Go Kindling binary to generate /app/trmnl/weather.png,
-ImageMagick converts it into a 1-bit 800x480 BMP in the shared Terminus uploads
+ImageMagick converts it into a 2-bit 800x480 PNG in the shared Terminus uploads
 volume, then the Terminus screens API is POSTed/PATCHed with uri+preprocessed.
 """
 
@@ -22,7 +22,7 @@ APP_DIR = Path(os.environ.get("APP_DIR", "/app"))
 KINDLING_BIN = Path(os.environ.get("KINDLING_BIN", "/app/kindling"))
 SOURCE_IMAGE = Path(os.environ.get("SOURCE_IMAGE", "/app/trmnl/weather.png"))
 STAGING_DIR_LOCAL = Path(os.environ.get("STAGING_DIR_LOCAL", "/uploads"))
-STAGING_FILENAME = os.environ.get("STAGING_FILENAME", "kindling_weather.bmp")
+STAGING_FILENAME = os.environ.get("STAGING_FILENAME", "kindling_weather.png")
 STAGING_PATH_TERMINUS = os.environ.get(
     "STAGING_PATH_TERMINUS", f"/app/public/uploads/{STAGING_FILENAME}"
 )
@@ -64,13 +64,18 @@ def convert_to_staging() -> int:
         [
             CONVERT_BIN,
             str(SOURCE_IMAGE),
-            "-monochrome",
-            "-colors",
-            "2",
+            "-colorspace",
+            "Gray",
+            "-dither",
+            "FloydSteinberg",
+            "-posterize",
+            "4",
+            "-alpha",
+            "off",
             "-depth",
-            "1",
+            "2",
             "-strip",
-            f"BMP3:{staging_local}",
+            f"PNG:{staging_local}",
         ],
         check=True,
     )
