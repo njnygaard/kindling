@@ -17,11 +17,19 @@ import (
 	"github.com/njnygaard/kindling/gg"
 )
 
-const (
-	ApiKey = "b40995f7e1911e427c0700778e542369"
-)
+const OpenWeatherAPIKeyEnv = "OPENWEATHERMAP_API_KEY"
+
+func openWeatherAPIKey() string {
+	key := os.Getenv(OpenWeatherAPIKeyEnv)
+	if key == "" {
+		log.Fatalf("%s is required", OpenWeatherAPIKeyEnv)
+	}
+	return key
+}
 
 func generateWeather(width, height int) {
+	apiKey := openWeatherAPIKey()
+
 	var fondamentoSize float64 = 60
 	var winterSongSize float64 = 90
 
@@ -47,13 +55,13 @@ func generateWeather(width, height int) {
 	/****************/
 
 	// Weather
-	w, err := owm.NewCurrent("F", "en", ApiKey)
+	w, err := owm.NewCurrent("F", "en", apiKey)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	err = w.CurrentByName("Brisbane")
 	if err != nil {
-		return
+		log.Fatalf("fetch Brisbane weather: %v", err)
 	}
 	// City Label
 	if err := dc.LoadFontFace("Fondamento-Regular.ttf", fondamentoSize); err != nil {
@@ -74,13 +82,13 @@ func generateWeather(width, height int) {
 	/*********************/
 
 	// Weather
-	w, err = owm.NewCurrent("F", "en", ApiKey)
+	w, err = owm.NewCurrent("F", "en", apiKey)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	err = w.CurrentByName("Saint-Émilion")
 	if err != nil {
-		return
+		log.Fatalf("fetch Saint-Émilion weather: %v", err)
 	}
 	// City Label
 	if err := dc.LoadFontFace("Fondamento-Regular.ttf", fondamentoSize); err != nil {
@@ -99,7 +107,7 @@ func generateWeather(width, height int) {
 	// Export for Text
 	err = dc.SavePNG("trmnl/weather.png")
 	if err != nil {
-		return
+		log.Fatalf("save weather image: %v", err)
 	}
 
 	generateTestPattern(width, height)

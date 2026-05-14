@@ -1,0 +1,46 @@
+# Kindling weather renderer for tatajuba / Terminus.
+#
+# Deploy convention on tatajuba:
+#   /home/drone/staging/tatajuba/kindling
+#
+# This service renders the 800x480 weather screen locally, writes a 1-bit BMP
+# into Terminus's shared uploads volume, and updates a Terminus screen using
+# uri+preprocessed:true.
+
+name: kindling
+
+services:
+  weather:
+    build:
+      context: .
+    image: kindling-weather:local
+    container_name: kindling-weather
+    restart: unless-stopped
+    user: "1000:1000"
+    environment:
+      OPENWEATHERMAP_API_KEY: ${OPENWEATHERMAP_API_KEY}
+      TERMINUS_URL: ${TERMINUS_URL:-http://host.docker.internal:2300}
+      TERMINUS_LOGIN: ${TERMINUS_LOGIN}
+      TERMINUS_PASSWORD: ${TERMINUS_PASSWORD}
+      SCREEN_NAME: ${SCREEN_NAME:-kindling_weather}
+      SCREEN_LABEL: ${SCREEN_LABEL:-Kindling Weather}
+      MODEL_ID: ${MODEL_ID:-1}
+      PLAYLIST_ID: ${PLAYLIST_ID:-3}
+      INTERVAL_SECONDS: ${INTERVAL_SECONDS:-300}
+      TZ: ${TZ:-America/Los_Angeles}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - /home/drone/.local/state:/state
+      # Shared with trmnl-byos web at /app/public/uploads/.
+      - trmnl-byos_web-uploads:/uploads
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.5"
+
+volumes:
+  trmnl-byos_web-uploads:
+    external: true
+    name: trmnl-byos_web-uploads
